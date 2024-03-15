@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IphoneCalculatorClone</title>
+    <link rel="icon" type="image/png" href="/calculatorICON.png">
+
+    <style>
+        body {
+            background-image: url("/iphoneBG.jpg");
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+        }
+        .container {
+            position: relative;
+            border: 10px double gray;
+            width: 330px;
+            height: 710px;
+            border-radius: 75px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            flex-direction: column;
+        }
+        .camera-container {
+            position: absolute;
+            width: 140px;
+            height: 25px;
+            top: 0%;
+            border: 2px solid black;
+            border-radius: 0px 0px 20px 20px;
+            border: none;
+            background-color: #333333;
+        }
+        #currentTime {
+            position: absolute;
+            top: 0.5%;
+            left: 13%;
+            color: white;
+            font-size: 11px;
+        }
+        .nav {
+            position: absolute;
+            width: 130px;
+            height: 4px;
+            background-color: white;
+            border-radius: 10px;
+            bottom: 1%;
+        }
+        .num1 {
+            position: relative;
+            width: 310px;
+            height: 100px;
+            margin-top: 30px;
+            margin-left: 8.3px;
+            font-size: 70px;
+            color: white;
+            background-color: black;
+            text-align: right;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .num2 {
+            position: relative;
+            width: 310px;
+            height: 100px;
+            margin-top: 10px;
+            margin-left: 8.3px;
+            font-size: 70px;
+            color: white;
+            background-color: black;
+            text-align: right;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .btnContainer {
+            position: relative;
+            width: 300px;
+            height: 365px;
+            background-color: black;
+            margin-top: 20px;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 50px;
+            padding: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.5s;
+        }
+        .button:hover {
+            transform: translateY(-5px);
+        }
+    
+        #ac, #plusMinus, #percent {
+            background-color: #a5a5a5;
+        }
+        #division, #multiply, #minus, #addition, #equal {
+            background-color: #ff9f0a;
+            color: white;
+        }
+        #num9, #num8, #num7, #num6, #num5, #num4, #num3, #num2, #num1, #num0, #dot {
+            background-color: #333333;
+            color: white;
+        }
+    </style>
+    
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="container" runat="server">
+            <div class="camera-container" runat="server">
+    
+            </div>
+            <label id="currentTime">9:55</label>
+            <div class="nav"></div>
+            <div class="outputContainer">
+                <input id="output1" class="num1" readonly>
+                <input id="output2" class="num2" type="number" readonly>
+            </div>
+            <div class="btnContainer">
+                <!-- Row 1 -->
+                <input id="ac" value="AC" class="button" type="button">
+                <input id="plusMinus" value="+/-" class="button" type="button">
+                <input id="percent" value="%" class="button" type="button">
+                <input id="division" value="/" class="button"button type="button">
+                
+                <!-- Row 2 -->
+                <input id="num7" value="7" class="button" type="button">
+                <input id="num8" value="8" class="button" type="button">
+                <input id="num9" value="9" class="button" type="button">
+                <input id="multiply" value="*" class="button" type="button">
+                
+                <!-- Row 3 -->
+                <input id="num4" value="4" class="button" type="button">
+                <input id="num5" value="5" class="button" type="button">
+                <input id="num6" value="6" class="button" type="button">
+                <input id="minus" value="-" class="button" type="button">
+                
+                <!-- Row 4 -->
+                <input id="num1" value="1" class="button" type="button">
+                <input id="num2" value="2" class="button" type="button">
+                <input id="num3" value="3" class="button" type="button">
+                <input id="addition" value="+" class="button" type="button">
+                
+                <!-- Row 5 -->
+                <input id="num0" value="0" class="button" type="button">
+                <input id="dot" value="." class="button" type="button">
+                <input id="equal" value="=" class="button" type="button">
+            </div>
+        </div>
+    </form>
+
+    <!-- Function -->
+    <script>
+        function initializeCalculator() {
+            var output1 = document.getElementById('output1');
+            var output2 = document.getElementById('output2');
+            var buttons = document.getElementsByClassName('button');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].addEventListener('click', function() {
+                    var value = this.value;
+                    switch (value) {
+                        case 'AC':
+                            output1.value = '';
+                            output2.value = '';
+                            break;
+                        case '+/-':
+                            output2.value = parseFloat(output2.value) * -1;
+                            break;
+                        case '%':
+                            output2.value = parseFloat(output1.value) * parseFloat(output2.value) / 100;
+                            break;
+                        case '=':
+                            output2.value = eval(output1.value);
+                            break;
+                        default:
+                            output1.value += value;
+                            break;
+                    }
+                });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', initializeCalculator);
+
+        // this is for realtime clock
+        function updateTime() {
+            var currentTimeElement = document.getElementById('currentTime');
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            hours = (hours < 10 ? "0" : "") + hours;
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+            currentTimeElement.textContent = hours + ":" + minutes + ":" + ampm;
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    </script>
+
+</body>
+</html>
